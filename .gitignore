@@ -1,0 +1,8 @@
+/app/.build
+/app/provelobern/static/build
+/app/node_modules
+/app/npm-debug.log
+/app/common.ini
+*.pyc
+*.egg-info
+*.po~
