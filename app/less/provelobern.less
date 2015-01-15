@@ -1,6 +1,10 @@
 @import (inline) "../node_modules/openlayers/css/ol.css";
 @import "map.less";
 
+@pulldown-width: 315;
+@screen-phone: 480px;
+
+
 html, body, #map {
   width: 100%;
   height: 100%;
@@ -8,5 +12,118 @@ html, body, #map {
   padding: 0;
 }
 
+// pulldown box
+#pulldown {
+  position: absolute;
+  left: 0;
+  width: unit(@pulldown-width, px);
+  z-index: 1000;
+  top: 0;
+  @media (max-width: @screen-phone) {
+    width: 100%;
+    height: 0;
+    top: 0;
+    z-index: 1100;
+  }
+  .hidden-collapsed {
+    display: inline;
+  }
+  .visible-collapsed {
+    display: none;
+  }
+  .collapsed {
+    .hidden-collapsed {
+      display: none;
+    }
+    .visible-collapsed {
+      display: inline;
+    }
+  }
+}
 
+#pulldown-header {
+  padding: 5px;
+  padding-bottom: 0px;
+}
 
+#pulldown-box {
+  background-color: #fff;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #bdbdbd;
+  box-shadow: 0px 5px 5px rgba(0,0,0,0.5);
+}
+
+.toggle {
+  padding: 0px;
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.175);
+  width: 75%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-left: 12.5%;
+  z-index: 1200;
+  background-color: #464646;
+  border-color: #464646;
+  color: #fff;
+  &:hover, &:focus {
+    background-color: #3A3C3C;
+    border-color: #2E2F2F;
+    color: #fff;
+  }
+}
+
+#pulldown-content {
+}
+
+.languages {
+  padding-right: 5px;
+  font-size: 12px;
+  text-align: right;
+
+  .active-language {
+    font-weight: bold;
+  }
+}
+
+.search-fields {
+  width: 300px;
+  padding: 5px;
+
+  .input-group-addon {
+    width:16px;
+    height:16px;
+    line-height:16px;
+    border: none;
+    border-radius: 50%;
+    color:#f5f5f5;
+    text-align:center;
+    text-decoration:none;
+    background: #464646;
+    box-shadow: 0 0 3px gray;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .input-group input {
+    margin-left: 10px;
+    width: 220px;
+  }
+
+  .input-group {
+    margin-top: 6px;
+  }
+
+  .routing-type {
+    margin-left: 44px;
+    margin-top: 6px;
+  }
+
+  .routing-type .btn-primary {
+    background-color: #A0A0A0;
+    border-color: #828282;
+  }
+
+  .routing-type .btn-primary.active {
+    background-color: #828282;
+    border-color: #828282;
+  }
+}
