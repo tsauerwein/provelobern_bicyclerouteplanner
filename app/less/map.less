@@ -84,12 +84,40 @@
   right: auto;
   left: 0;
   height: 1.4em;
+  bottom: 0px;
+}
+
+.ol-attribution {
+  height: 2.5em;
+  bottom: 5px;
 }
 
 .ol-attribution:hover {
   background-color: rgba(255,255,255,0.6);
 }
 
+.ol-attribution.ol-collapsed:hover {
+  background-color: transparent;
+}
+
 .ol-attribution ul {
   font-size: 1rem;
+  float: right;
+}
+
+.ol-touch .ol-attribution ul {
+  width: 230px;
+  text-align: left;
+}
+
+.ol-attribution button {
+  float: left;
+  width: 30px;
+  height: 30px;
+  line-height: 25px;
+  font-size: 1.4em;
+}
+
+.ol-touch .ol-attribution button {
+  font-size: 1.4em;
 }

@@ -55,8 +55,9 @@ app.MainController = function(gettextCatalog, langUrlTemplate,
   this.extentSwiss_ = ol.proj.transformExtent(
       [5.7997, 45.7016, 10.597, 47.89975], 'EPSG:4326', 'EPSG:3857');
 
-  var attribution = new ol.control.Attribution({
-    collapsible: false
+  this.attribution_ = new ol.control.Attribution({
+    collapsible: false,
+    collapseLabel: '\u00AB'
   });
 
   /**
@@ -98,7 +99,7 @@ app.MainController = function(gettextCatalog, langUrlTemplate,
     controls: ol.control.defaults({
       attribution: false
     }).extend([
-      attribution,
+      this.attribution_,
       new app.GeoLocateControl({
         extent: this.extentSwiss_
       }),
@@ -115,14 +116,18 @@ app.MainController = function(gettextCatalog, langUrlTemplate,
   var size = this.map_.getSize();
   if (goog.isDef(size)) {
     this.map_.getView().fitExtent(this.extentBern_, size);
+    this.checkSize_();
   } else {
     this.map_.once('change:size', function() {
       var size = this.map_.getSize();
       goog.asserts.assert(goog.isDef(size));
       this.map_.getView().fitExtent(
           this.extentBern_, /** @type {ol.Size} */ (size));
+      this.checkSize_();
     }, this);
   }
+
+  goog.events.listen(window, 'resize', this.checkSize_, false, this);
 
   this['map'] = this.map_;
 
@@ -140,13 +145,25 @@ app.MainController = function(gettextCatalog, langUrlTemplate,
  * @export
  */
 app.MainController.prototype.switchLanguage = function(lang) {
-  console.log(lang);
   this.gettextCatalog_.setCurrentLanguage(lang);
   if (lang !== 'en') {
     this.gettextCatalog_.loadRemote(
         this.langUrlTemplate_.replace('__lang__', lang));
   }
   this['lang'] = lang;
+};
+
+
+/**
+ * @private
+ */
+app.MainController.prototype.checkSize_ = function() {
+  var size = this.map_.getSize();
+  if (goog.isDef(size)) {
+    var small = size[0] < 600;
+    this.attribution_.setCollapsible(small);
+    this.attribution_.setCollapsed(small);
+  }
 };
 
 
