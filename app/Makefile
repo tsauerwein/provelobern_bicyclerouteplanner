@@ -45,7 +45,7 @@ cleanall: clean
 	rm -rf node_modules
 
 .PHONY: compile-catalog
-compile-catalog: provelobern/static/build/locale/fr/provelobern.json
+compile-catalog: provelobern/static/build/locale/de/provelobern.json
 
 .PHONY: flake8
 flake8: .build/venv/bin/flake8
@@ -74,8 +74,8 @@ provelobern/closure/%.py: $(CLOSURE_LIBRARY_PATH)/closure/bin/build/%.py
 provelobern/locale/provelobern-client.pot: $(APP_HTML_FILES)
 	node tasks/extract-messages.js $^ > $@
 
-provelobern/locale/fr/LC_MESSAGES/provelobern-client.po: provelobern/locale/provelobern-client.pot
-	cd provelobern/locale && msgmerge --update fr/LC_MESSAGES/provelobern-client.po provelobern-client.pot
+provelobern/locale/de/LC_MESSAGES/provelobern-client.po: provelobern/locale/provelobern-client.pot
+	cd provelobern/locale && msgmerge --update de/LC_MESSAGES/provelobern-client.po provelobern-client.pot
 
 provelobern/static/build/build.js: build.json $(OL_JS_FILES) $(NGEO_JS_FILES) $(APP_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js .build/externs/angular-1.3-http-promise.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -89,7 +89,7 @@ provelobern/static/build/build.css: $(LESS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/lessc less/provelobern.less > $@
 
-provelobern/static/build/locale/fr/provelobern.json: provelobern/locale/fr/LC_MESSAGES/provelobern-client.po
+provelobern/static/build/locale/de/provelobern.json: provelobern/locale/de/LC_MESSAGES/provelobern-client.po
 	mkdir -p $(dir $@)
 	node tasks/compile-catalog $< > $@
 
