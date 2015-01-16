@@ -12,6 +12,23 @@ html, body, #map {
   padding: 0;
 }
 
+// language switcher
+.languages {
+  padding-right: 5px;
+  font-size: 12px;
+  text-align: right;
+
+  .active-language {
+    font-weight: bold;
+    cursor: default;
+  }
+
+  a:link, a:hover, a:visited, a:focus {
+    text-decoration: none;
+    color: #333;
+  }
+}
+
 // pulldown box
 #pulldown {
   position: absolute;
@@ -72,16 +89,6 @@ html, body, #map {
 }
 
 #pulldown-content {
-}
-
-.languages {
-  padding-right: 5px;
-  font-size: 12px;
-  text-align: right;
-
-  .active-language {
-    font-weight: bold;
-  }
 }
 
 .search-fields {

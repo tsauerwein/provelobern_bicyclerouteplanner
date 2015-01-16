@@ -4,9 +4,9 @@
     closure_library_path = settings.get('closure_library_path')
 %>\
 <!DOCTYPE html>
-<html lang={{mainCtrl.lang}} ng-app="app" ng-controller="MainController as mainCtrl">
+<html lang={{ctrl.lang}} ng-app="app" ng-controller="MainController as ctrl">
   <head>
-    <title>Veloroutenplaner Pro Velo Bern</title>
+    <title ng-bind-template="{{'Bicycle Route Planner | Pro Velo Bern'|translate}}">velorouten.ch</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -24,8 +24,6 @@
 % endif
   </head>
   <body>
-    <!-- <h1 translate>Hello!</h1> -->
-
     <div ng-cloak translate-cloak id="pulldown">
       <div id="pulldown-box">
         <div id="pulldown-header">
@@ -34,26 +32,27 @@
         </div>
         <div id="pulldown-content" class="content in">
           <div class="languages">
-            <span class="active-language">DE </span><span>EN</span>
+            <a href="" ng-class="{'active-language': ctrl.lang == 'de'}" ng-click="ctrl.switchLanguage('de')">DE</a>
+            <a href="" ng-class="{'active-language': ctrl.lang == 'en'}" ng-click="ctrl.switchLanguage('en')">EN</a>
           </div>
           <div class="search-fields">
             <div class="input-group">
               <span class="input-group-addon">A</span>
-              <input type="text" class="form-control input-sm" placeholder="From">
+              <input type="text" class="form-control input-sm" placeholder="{{'From'|translate}}">
             </div>
             <div class="input-group">
               <span class="input-group-addon">B</span>
-              <input type="text" class="form-control input-sm" placeholder="To">
+              <input type="text" class="form-control input-sm" placeholder="{{'To'|translate}}">
             </div>
             <div class="routing-type btn-group" data-toggle="buttons">
               <label class="btn btn-primary active btn-sm">
-                <input type="radio" name="route-type" id="type-direct" autocomplete="off" checked> Direct
+                <input type="radio" name="route-type" id="type-direct" autocomplete="off" checked> {{'Direct'|translate}}
               </label>
               <label class="btn btn-primary btn-sm">
-                <input type="radio" name="route-type" id="type-optimized" autocomplete="off"> Optimized
+                <input type="radio" name="route-type" id="type-optimized" autocomplete="off"> {{'Optimized'|translate}}
               </label>
               <label class="btn btn-primary btn-sm">
-                <input type="radio" name="route-type" id="type-ebike" autocomplete="off"> E-Bike
+                <input type="radio" name="route-type" id="type-ebike" autocomplete="off"> {{'E-Bike'|translate}}
               </label>
             </div>
           </div>
@@ -71,7 +70,7 @@
       </button>
     </div>
 
-    <div id="map" ngeo-map="mainCtrl.map"></div>
+    <div id="map" ngeo-map="ctrl.map"></div>
 % if debug:
     <script src="${request.static_url('%s/angular-gettext/dist/angular-gettext.js' % node_modules_path)}"></script>
     <script src="${request.static_url('%s/closure/goog/base.js' % closure_library_path)}"></script>
