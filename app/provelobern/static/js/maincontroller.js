@@ -4,6 +4,8 @@ goog.require('app');
 goog.require('app.GeoLocateControl');
 goog.require('goog.asserts');
 goog.require('goog.dom');
+goog.require('ngeo.GetBrowserLanguage');
+goog.require('ngeo.Location');
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.Size');
@@ -17,11 +19,15 @@ goog.require('ol.source.OSM');
 /**
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {string} langUrlTemplate Language URL template.
+ * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
+ *        GetBrowserLanguage Service.
+ * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
  */
-app.MainController = function(gettextCatalog, langUrlTemplate) {
+app.MainController = function(gettextCatalog, langUrlTemplate,
+    ngeoGetBrowserLanguage, ngeoLocation) {
 
   /**
    * @type {angularGettext.Catalog}
@@ -120,7 +126,12 @@ app.MainController = function(gettextCatalog, langUrlTemplate) {
 
   this['map'] = this.map_;
 
-  this.switchLanguage('fr');
+  var projectLanguages = ['en', 'de'];
+  var lang = ngeoLocation.getParam('lang');
+  if (!goog.array.contains(projectLanguages, lang)) {
+    lang = ngeoGetBrowserLanguage(projectLanguages) || 'en';
+  }
+  this.switchLanguage(lang);
 };
 
 
@@ -129,9 +140,12 @@ app.MainController = function(gettextCatalog, langUrlTemplate) {
  * @export
  */
 app.MainController.prototype.switchLanguage = function(lang) {
+  console.log(lang);
   this.gettextCatalog_.setCurrentLanguage(lang);
-  this.gettextCatalog_.loadRemote(
-      this.langUrlTemplate_.replace('__lang__', lang));
+  if (lang !== 'en') {
+    this.gettextCatalog_.loadRemote(
+        this.langUrlTemplate_.replace('__lang__', lang));
+  }
   this['lang'] = lang;
 };
 
