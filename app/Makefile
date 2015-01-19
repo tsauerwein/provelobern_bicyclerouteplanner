@@ -23,6 +23,7 @@ help:
 	@echo "- lint                Check the JavaScript code with linters"
 	@echo "- serve               Run the development server (pserve)"
 	@echo "- update-node-modules Update node modules (using --force)"
+	@echo "- modwsgi             Create files for Apache mod_wsgi"
 	@echo
 
 .PHONY: check
@@ -138,3 +139,14 @@ $(SITE PACKAGES)/provelobern.egg-link: .build/venv setup.py
 
 common.ini: common.ini.in
 	sed 's|__CLOSURE_LIBRARY_PATH__|$(CLOSURE_LIBRARY_PATH)|' $< > $@
+
+.PHONY: modwsgi
+modwsgi: install .build/venv/provelobern.wsgi .build/apache.conf
+
+.build/venv/provelobern.wsgi: provelobern.wsgi
+	sed 's#{{DIR}}#$(CURDIR)#' $< > $@
+	chmod 755 $@
+
+.build/apache.conf: apache.conf .build/venv
+	sed -e 's#{{PYTHONPATH}}#$(shell .build/venv/bin/python -c "import distutils; print(distutils.sysconfig.get_python_lib())")#' \
+		-e 's#{{WSGISCRIPT}}#$(abspath .build/venv/provelobern.wsgi)#' $< > $@
