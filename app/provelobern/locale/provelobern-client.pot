@@ -20,7 +20,17 @@ msgid "From"
 msgstr ""
 
 #: provelobern/templates/index.html
+msgid "Imprint"
+msgstr ""
+
+#: provelobern/templates/index.html
 msgid "Optimized"
+msgstr ""
+
+#: provelobern/templates/index.html
+msgid ""
+"The bicycle route planner by <a href=\"http://www.provelobern.ch/\" target=\"_blank\">Pro Velo Bern</a> and\n"
+"              the city of <a href=\"http://www.bern.ch/\" target=\"_blank\">Bern</a> is based on OpenStreetMap data."
 msgstr ""
 
 #: provelobern/templates/index.html
