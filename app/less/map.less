@@ -105,19 +105,24 @@
   float: right;
 }
 
-.ol-touch .ol-attribution ul {
-  width: 230px;
-  text-align: left;
+.ol-attribution {
+  @media (max-width: @screen-phone) {
+    display: none;
+  }
 }
 
-.ol-attribution button {
-  float: left;
+.ol-info {
+  bottom: 24px;
+  left: 5px;
+  @media (max-width: @screen-phone) {
+    bottom: 5px;
+    left: 5px;
+  }
+}
+
+.ol-info button {
   width: 30px;
   height: 30px;
   line-height: 25px;
-  font-size: 1.4em;
-}
-
-.ol-touch .ol-attribution button {
   font-size: 1.4em;
 }

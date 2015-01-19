@@ -2,6 +2,7 @@ goog.provide('app.MainController');
 
 goog.require('app');
 goog.require('app.GeoLocateControl');
+goog.require('app.InfoControl');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('ngeo.GetBrowserLanguage');
@@ -103,6 +104,9 @@ app.MainController = function(gettextCatalog, langUrlTemplate,
       new app.GeoLocateControl({
         extent: this.extentSwiss_
       }),
+      new app.InfoControl({
+        dialog: '#imprint'
+      }),
       new ol.control.ZoomToExtent(
           /** @type {olx.control.ZoomToExtentOptions} */ ({
             extent: this.extentBern_,
@@ -116,18 +120,14 @@ app.MainController = function(gettextCatalog, langUrlTemplate,
   var size = this.map_.getSize();
   if (goog.isDef(size)) {
     this.map_.getView().fitExtent(this.extentBern_, size);
-    this.checkSize_();
   } else {
     this.map_.once('change:size', function() {
       var size = this.map_.getSize();
       goog.asserts.assert(goog.isDef(size));
       this.map_.getView().fitExtent(
           this.extentBern_, /** @type {ol.Size} */ (size));
-      this.checkSize_();
     }, this);
   }
-
-  goog.events.listen(window, 'resize', this.checkSize_, false, this);
 
   this['map'] = this.map_;
 
@@ -152,19 +152,5 @@ app.MainController.prototype.switchLanguage = function(lang) {
   }
   this['lang'] = lang;
 };
-
-
-/**
- * @private
- */
-app.MainController.prototype.checkSize_ = function() {
-  var size = this.map_.getSize();
-  if (goog.isDef(size)) {
-    var small = size[0] < 600;
-    this.attribution_.setCollapsible(small);
-    this.attribution_.setCollapsed(small);
-  }
-};
-
 
 app.module.controller('MainController', app.MainController);

@@ -71,6 +71,22 @@
     </div>
 
     <div id="map" ngeo-map="ctrl.map"></div>
+
+    <!-- Imprint -->
+    <div class="modal fade" id="imprint" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            <h4 class="modal-title">Imprint</h4>
+          </div>
+          <div class="modal-body">
+            Imprint
+          </div>
+        </div>
+      </div>
+    </div>
+
 % if debug:
     <script src="${request.static_url('%s/angular-gettext/dist/angular-gettext.js' % node_modules_path)}"></script>
     <script src="${request.static_url('%s/closure/goog/base.js' % closure_library_path)}"></script>
