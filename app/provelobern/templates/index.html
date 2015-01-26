@@ -16,11 +16,13 @@
     <link rel="stylesheet" href="${request.static_url('provelobern:static/build/build.css')}" type="text/css">
     <script src="${request.static_url('%s/jquery/dist/jquery.js' % node_modules_path)}"></script>
     <script src="${request.static_url('%s/angular/angular.js' % node_modules_path)}"></script>
+    <script src="${request.static_url('%s/angular-i18n/angular-locale_de.js' % node_modules_path)}"></script>
 % else:
     <link rel="stylesheet" href="${request.static_url('%s/bootstrap/dist/css/bootstrap.min.css' % node_modules_path)}" type="text/css">
     <link rel="stylesheet" href="${request.static_url('provelobern:static/build/build.min.css')}" type="text/css">
     <script src="${request.static_url('%s/jquery/dist/jquery.min.js' % node_modules_path)}"></script>
     <script src="${request.static_url('%s/angular/angular.min.js' % node_modules_path)}"></script>
+    <script src="${request.static_url('%s/angular-i18n/angular-locale_de.js' % node_modules_path)}"></script>
 % endif
   </head>
   <body>
@@ -55,6 +57,16 @@
                 <input type="radio" name="route-type" id="type-ebike" autocomplete="off"> {{'E-Bike'|translate}}
               </label>
             </div>
+          </div>
+          <div ng-show="ctrl.status == 'route'">
+            <p>Estimated duration: <span>{{ctrl.routeTime}}</span></p>
+            <p>Distance: <span>{{ctrl.routeDistance|number:1}}</span></p>
+          </div>
+          <div ng-show="ctrl.status == 'error'">
+            Error
+          </div>
+          <div ng-show="ctrl.status == 'route-invalid'">
+            No route found
           </div>
         </div>
       </div>
